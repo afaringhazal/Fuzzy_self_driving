@@ -45,7 +45,7 @@ class FuzzyController:
         rules.append(("high_right", min(close_l, far_r)))
         rules.append(("low_left", min(moderate_l, close_r)))
         rules.append(("high_left", min(far_l, close_r)))
-        rules.append(("nothing", min(moderate_l, moderate_l)))
+        rules.append(("nothing", min(moderate_l, moderate_r)))
 
         return self.find_rotate_2(rules)
 
@@ -73,7 +73,7 @@ class FuzzyController:
         i = min_num
         sigma = 0.0
         sigma_m = 0.0
-        delta = 0.005
+        delta = 0.01
         while i < max_num:
             y = self.find_y(rules, name)
             y_prime = a * i + b
@@ -146,13 +146,16 @@ class FuzzyController:
         range_number = self.calculate_range_number_and_maximum_effective(rules, line_equations)
         sigma_tot = 0
         sigma_m_tot = 0
-        for min_num , max_num , (a,b),name in range_number:
+        for min_num, max_num, (a, b), name in range_number:
             s, s_ = self.integeral_final(min_num , max_num , (name, (a,b)), rules)
             sigma_tot += s
             sigma_m_tot += s_
-        return  sigma_tot / sigma_m_tot
+        result = float(sigma_tot) / float(sigma_m_tot)
+        print(f'result {result}')
+        if result < 0:
+            print("negative")
+        return result
     def find_rotate_2(self, rules: List[Tuple[str, float]]):
-        # line_equations: List[Tuple[str, Tuple[float, float], int]] = list()
         line_equations = self.find_line_equations()
         return self.find_center_of_gravity(line_equations, rules)
 
