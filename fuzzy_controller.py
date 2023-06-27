@@ -50,7 +50,7 @@ class FuzzyController:
         return self.find_rotate_2(rules)
 
 
-#FIXED
+
     def find_line_equations(self):
         line_equations: List[Tuple[str, Tuple[float, float], int]] = list()
         line_equations.append(("high_right", self.line_equation((-50, 0), (-20, 1)), 1))
@@ -68,7 +68,7 @@ class FuzzyController:
         for name, y in rules:
             if name == name_:
                 return y
-    def integeral_final(self, min_num, max_num,line,rules:List[Tuple[str,float]]):
+    def final_integeral(self, min_num, max_num, line, rules:List[Tuple[str,float]]):
         name, (a, b) = line
         i = min_num
         sigma = 0.0
@@ -147,7 +147,7 @@ class FuzzyController:
         sigma_tot = 0
         sigma_m_tot = 0
         for min_num, max_num, (a, b), name in range_number:
-            s, s_ = self.integeral_final(min_num , max_num , (name, (a,b)), rules)
+            s, s_ = self.final_integeral(min_num, max_num, (name, (a, b)), rules)
             sigma_tot += s
             sigma_m_tot += s_
         result = float(sigma_tot) / float(sigma_m_tot)
